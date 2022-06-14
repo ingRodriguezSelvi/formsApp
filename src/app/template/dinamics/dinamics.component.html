@@ -1,0 +1,83 @@
+<h2>Template: Dinamics</h2>
+<hr />
+
+<form (ngSubmit)="save()" #myForm="ngForm">
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">Name</label>
+    <div class="col-sm-9">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Write name a person"
+        [(ngModel)]="personOne.name"
+        name="name"
+        required
+        minlength="3"
+      />
+      <span
+        *ngIf="
+          myForm.controls['name']?.invalid && myForm.controls['name']?.touched
+        "
+        class="form-text text-danger"
+      >
+        This camp is requeried
+      </span>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">Favourite</label>
+    <div class="col-sm-9">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Write a favourite"
+          [(ngModel)]="newGame"
+          (keyup.enter)="addFavourite()"
+          name="game"
+        />
+        <button
+          class="btn btn-outline-primary"
+          type="button"
+          (click)="addFavourite()"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label"></label>
+    <div class="col-sm-9">
+      <div
+        class="input-group mb-1"
+        *ngFor="let favourite of personOne.favourite; let i = index"
+      >
+        <input
+          class="form-control"
+          [(ngModel)]="favourite.name"
+          name="favourite_{{ i }}"
+        />
+        <button
+          class="btn btn-outline-danger"
+          type="button"
+          (click)="delete(i)"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <button class="btn btn-primary float-end" type="button" (click)="save()">
+        Save
+      </button>
+    </div>
+  </div>
+</form>
+<div>
+  <pre>{{ personOne | json }}</pre>
+</div>
